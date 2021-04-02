@@ -89,7 +89,7 @@ class ContentCacheSegmentAspect
     /**
      * @Flow\Around("method(Neos\Fusion\Core\Cache\RuntimeContentCache->evaluateUncached()) && t3n\Neos\Debug\Aspect\ContentCacheSegmentAspect->debuggingActive")
      */
-    public function wrapEvaluateUncached(JoinPointInterface $joinPoint): string
+    public function wrapEvaluateUncached(JoinPointInterface $joinPoint): ?string
     {
         $start = microtime(true);
         $segment = $joinPoint->getAdviceChain()->proceed($joinPoint);
@@ -171,7 +171,7 @@ class ContentCacheSegmentAspect
      * @param mixed $segment This is mixed as the RuntimeContentCache might also return none string values
      * @param mixed[] $info
      */
-    protected function renderCacheInfoIntoSegment($segment, array $info): string
+    protected function renderCacheInfoIntoSegment($segment, array $info): ?string
     {
         $injectPosition = 2;
         $info = array_slice($info, 0, $injectPosition, true)
